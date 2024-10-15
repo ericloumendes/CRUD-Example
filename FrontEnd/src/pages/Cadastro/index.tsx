@@ -1,12 +1,19 @@
 import React, { ReactEventHandler, useEffect, useState } from "react";
 import './style.css'
+import { error } from "console";
 function Cadastrar(){
  
         const [data, setData] = useState({
           id: '',
           nome: '',
-          status: ''
+          status: '0'
         });
+
+        type dataItem = {
+          id: number,
+          nome: string,
+          status: number
+        }
 
       const MudancaField = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         setData({
@@ -20,6 +27,22 @@ function Cadastrar(){
         e.preventDefault();
         
         try {
+          if (data.id === '' || data.nome === '' || (data.status !== '0' && data.status !== "1")){
+            alert("Campo de cadastro invalido")
+            throw new Error('Campo de cadastro invalido!')
+          }
+          else {
+            const response = await fetch("http://localhost:5000/tarefas/");
+            const jsonData: dataItem[] = await response.json();
+            console.log(jsonData)
+
+            jsonData.forEach(item => {
+              if (data.id === item.id.toString() || data.nome === item.nome){
+                alert('Essa tarefa ja existe!')
+                throw new Error('Tarefa ja existente!')
+              }
+            })
+          }
           const response = await fetch('http://localhost:5000/tarefas/', {
             method: 'POST',
             headers: {
@@ -33,7 +56,7 @@ function Cadastrar(){
           setData({
             id: '',
             nome: '',
-            status: ''
+            status: '0'
           });
         } catch (error) {
           console.error('Error submitting form:', error);

@@ -6,6 +6,10 @@ function Deletar(){
           id: '',
         });
 
+        type dataItem = {
+          id: number,
+        }
+
       const MudancaField = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         setData({
             ...data,
@@ -18,6 +22,11 @@ function Deletar(){
         e.preventDefault();
         
         try {
+          if (data.id === ''){
+            alert('Campo de exclusao invalido')
+            throw new Error('Campo de exclusao invalido')
+          }
+
           const response = await fetch(`http://localhost:5000/tarefas/${data.id}`, {
             method: 'Delete',
             headers: {
