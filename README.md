@@ -41,13 +41,24 @@ nome varchar(30),
 status bool);
 ```
 
+If it is your first time running the Backend, run in Backend/ folder:
+```node
+npm install
+```
+
 Now in Backend/ folder, execute the following command in the command prompt:
 ```node
 npm start
 ```
 
 ## Running the Frontend
+If it is your first time running the Frontend, run in Frontend/ folder:
+```node
+npm install
+```
+
 In cloned repository folder, open Frontend/ folder. Then open the command prompt and run this command:
 ```node
 npm start
 ```
+
